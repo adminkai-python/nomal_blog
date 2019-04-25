@@ -16,17 +16,12 @@ def post(post_id):
     post = Post.query.filter_by(id=post_id).first()
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
-        print("csrf验证已经关闭")
         username = comment_form.username.data
         comment = comment_form.comment.data
         comment_sql = Comment(username=username,comment=comment,post_id=post_id)
         db.session.add(comment_sql)
         db.session.commit()
         return redirect(url_for("blog.post",post_id=post_id))
-    if request.method == "POST" and comment_form.validate_on_submit() == False:
-        print("错误原因为:{}".format(comment_form.errors))
-        print("前端生成的csrf字段为：{}".format(comment_form.csrf_token))
-        print("session的csrf令牌值为：{}".format(session["csrf_token"]))
     return render_template("blog/post.html",post=post,comment_form=comment_form)
 
 
