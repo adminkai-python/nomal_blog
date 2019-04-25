@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% from "macros.html" import field_form %}
+
+{% block head %}
+    <link rel="stylesheet" href="../static/css/post_css.css">
+    <style>
+    .comment{display: flex;flex-direction: column;align-items: flex-start;}
+    .comment_two{align-self: flex-end;}
+    .comment_one,.comment_two{color: #f3ca91;}
+    .hr1{border-bottom: 1px solid #171511;}
+    .hr2{border-bottom: 1px solid #3e3a34;}
+    </style>
+{% endblock %}
+
+
+{% block body %}
+    <div class="row clearfix one">
+        <div class="col-md-12 column body">
+             <div class="blog_title">{{ post.title }}</div>
+             <div class="blog_add"><a href="#">作者：Wallace</a>&nbsp;&nbsp;{{ moment(post.timestamp).format("L") }}</div>
+            <p class="post_body">
+                {{ post.body }}
+            </p>
+        </div>
+    </div>
+    <div style="margin-top: 5%"></div>
+
+    <div class="comment_title">
+    <h2 style="color:#be862d">评论列表</h2>
+    </div>
+    <div class="comments">
+        {% if post.comments %}
+            {% for comment in post.comments %}
+                <div class="hr1" style="border-bottom: 1px solid #171511;"></div>
+                <div class="hr2" style="border-bottom: 1px solid #3e3a34;"></div>
+                <div class="comment">
+                    <div class="comment_one">
+                        {{ comment.username }}:{{ comment.comment }}
+                    </div>
+                    <div class="comment_two">
+                        {{ moment(comment.timestamp).format("L") }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="comment_self" style="display: flex;flex-direction: column;align-items: flex-start;">
+            <form method="post" style="width: 40%;color: #be862d">
+                {{ comment_form.csrf_token }}
+                {{ field_form(comment_form.username,class="form-control") }}
+                {{ field_form(comment_form.comment,class="form-control") }}
+                {{ field_form(comment_form.submit,type="submit", class="btn btn-default") }}
+            </form>
+    </div>
+
+
+
+
+
+{% endblock %}
+
+{% block script %}
+    {{ moment.locale("zh-cn") }}
+    {{ moment.include_moment() }}
+    {{ moment.include_jquery() }}
+
+{% endblock %}

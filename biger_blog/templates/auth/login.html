@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "macros.html" import field_form %}
+
+{% block body %}
+
+    <form method="post">
+
+        {{ admin_form.csrf_token }}
+        {{ field_form(admin_form.username,class="form-control") }}
+        {{ field_form(admin_form.password,class="form-control") }}
+        {{ field_form(admin_form.submit,class="btn btn-default") }}
+
+    </form>
+
+
+{% endblock %}

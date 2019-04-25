@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+
+
+
+{% block head %}
+    <style>
+    .page{display: flex;flex-direction: row;justify-content: center;margin-top: 5%;}
+    </style>
+{% endblock %}
+
+
+
+{% block body %}
+    {% if posts %}
+        {% for post in posts %}
+			<div class="row clearfix one">
+				<div class="col-md-12 column body">
+                     <div class="blog_title"><a href="{{ url_for("blog.post",post_id=post.id) }}">{{ post.title }}</a></div>
+                    <div class="blog_add">{{ moment(post.timestamp).format("L") }}&nbsp;&nbsp;<a href="#">{{ post.category.category_name }}</a></div>
+                    <p class="blog_body">{{ post.body }}</p>
+				</div>
+			</div>
+            <div class="hr1"></div>
+            <div class="hr2"></div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="page">
+        {{ render_pagination(pagination) }}
+    </div>
+
+{% endblock %}
+
+
+
+
+{% block script %}
+    {{ moment.locale("zh-cn") }}
+    {{ moment.include_moment() }}
+    {{ moment.include_jquery() }}
+
+{% endblock %}
