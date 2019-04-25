@@ -7,6 +7,7 @@ moment = Moment()
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from flask_wtf import CSRFProtect
+from flask_migrate import Migrate
 
 bootstrap = Bootstrap()
 ckeditor = CKEditor()
